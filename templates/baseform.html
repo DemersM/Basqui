@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" >
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" >
+<title>Basqui</title>
+<link rel="stylesheet" type="text/css" href="/static/main/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/static/main/css/forms.css" />
+<link rel="stylesheet" type="text/css" href="/static/main/css/table.css" />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/main/js/resize.js"></script>
+{% block static %}
+{% endblock %}
+<script type="text/javascript">
+{% block javascript %}
+{% endblock %}
+</script>
+</head>
+<body>
+<div style="margin-left:20px; margin-top:50px; margin-bottom:50px; position:relative;">
+{% block content %}
+{% endblock %}
+</div>
+</body>
+</html>

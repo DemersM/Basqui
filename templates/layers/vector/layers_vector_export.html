@@ -1,0 +1,12 @@
+{% load tags %}
+{% load crispy_forms_tags %}
+<h4>Export Vector File</h4>
+<p>
+  <div class="btn-group btn-breadcrumb">
+    <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+  {% for node in nodes %}
+    <a href="#" class="btn btn-default" onclick="layersTable({{ node.pk }})">{% if node|field_type:'Folder' %}<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;{{ node }}{% else %}<span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;{{ node }}{% endif %}</a></li>
+  {% endfor %}
+  </div>
+</p>
+{% crispy form %}

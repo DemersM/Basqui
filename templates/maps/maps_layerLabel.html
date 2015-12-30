@@ -1,0 +1,37 @@
+{% load crispy_forms_tags %}
+<style>
+.nav-tabs > li .close {
+    margin: -2px 0 0 10px;
+    font-size: 16px;
+}
+.marginBottom {
+    margin-bottom :16px !important;
+}
+</style>
+
+<form id="layerLabelForm_{{ layer.pk }}" class="form-horizontal sortable" method="post" action="" encrypt="multipart/form-data">{% csrf_token %}
+  {{ layerLabelFormset.management_form }}
+  <input type="hidden" id="layerLabelOrder_{{ layer.pk }}" name="layerLabelOrder" value="">
+  <div id="layerLabelFormset_{{ layer.pk }}" class="container-fluid" role="tabpanel">
+    <ul class="nav nav-tabs marginBottom" role="tablist" id="layerLabelTabs_{{ layer.pk }}">
+      {% for form in layerLabelFormset %}
+        <li role="presentation" class="layerLabel_li_{{ layer.pk }} {% if forloop.first %}active{% endif %}" layerLabel_id="{{ form.instance.pk }}">
+            <a href="#layerLabel_{{ layer.pk }}-Tab_{{ forloop.counter0 }}" aria-controls="layerLabel_{{ layer.pk }}-Tab_{{ forloop.counter0 }}" role="tab" data-toggle="tab">
+            {% if forloop.counter0 < layerLabelFormset.initial_forms|length %}
+              <button class="close layerLabelClose_{{ layer.pk }}" type="button" >x</button> Label {{ forloop.counter }}
+            {% else %}
+              New Label
+            {% endif %}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+    <div class="tab-content">
+      {% for form in layerLabelFormset %}
+        <div role="tabpanel" class="tab-pane{% if forloop.first %} active{% endif %}" id="layerLabel_{{ layer.pk }}-Tab_{{ forloop.counter0 }}">
+          {% crispy form %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</form>

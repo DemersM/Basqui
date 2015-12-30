@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" >
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" >
+<title>Basqui</title>
+<link rel="stylesheet" type="text/css" href="/static/main/css/basqui.css" />
+<link rel="stylesheet" type="text/css" href="/static/ext4/ext-theme-classic.css" />
+<script type="text/javascript" charset="utf-8" src="/static/ext4/ext-all-debug.js"></script>
+<script type="text/javascript" src="/static/geoext2/loader.js"></script>
+<script type="text/javascript" src="/static/OpenLayers/rbush.js"></script>
+<script type="text/javascript" src="/static/OpenLayers/OpenLayers.js"></script>
+<script type="text/javascript" src="/static/OpenLayers/CustomXYZ.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/OpenLayers/theme/default/style.css" />
+<script type="text/javascript" src="/static/jquery/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="/static/jquery/jquery-ui-1.11.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/static/spectrum/spectrum.js"></script>
+<link rel="stylesheet" href="/static/spectrum/spectrum.css" />
+<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href="/static/bootstrap/css/btn-breadcrumb.css">
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/static/select2/select2.css"/>
+<link rel="stylesheet" href="/static/select2/select2-bootstrap.css"/>
+<script type="text/javascript" src="/static/select2/select2.js"></script>
+<script type="text/javascript" src="/static/main/js/resize.js"></script>
+<script type="text/javascript" src="/static/main/js/ajax.js"></script>
+<script type="text/javascript" src="/static/SlickGrid/lib/jquery.event.drag-2.2.js"></script>
+<link rel="stylesheet" href="/static/SlickGrid/slick.grid.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="/static/SlickGrid/controls/slick.columnpicker.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" src="/static/SlickGrid/slick.core.js"></script>
+<script type="text/javascript" src="/static/SlickGrid/slick.grid.js"></script>
+<script type="text/javascript" src="/static/SlickGrid/bootstrap-slickgrid.js"></script>
+<script type="text/javascript" src="/static/SlickGrid/slick.editors.js"></script>
+<script type="text/javascript" src="/static/SlickGrid/slick.dataview.js"></script>
+<script type="text/javascript" src="/static/SlickGrid/slick.remotemodel.js"></script>
+<script type="text/javascript" src="/static/SlickGrid/plugins/slick.checkboxselectcolumn.js"></script>
+<script type="text/javascript" src="/static/SlickGrid/plugins/slick.cellrangedecorator.js"></script>
+<script type="text/javascript" src="/static/SlickGrid/plugins/slick.cellrangeselector.js"></script>
+<script type="text/javascript" src="/static/SlickGrid/plugins/slick.cellcopymanager.js"></script>
+<script type="text/javascript" src="/static/SlickGrid/plugins/slick.cellselectionmodel.js"></script>
+<script type="text/javascript" src="/static/SlickGrid/plugins/slick.rowselectionmodel.js"></script>
+<script type="text/javascript" src="/static/SlickGrid/controls/slick.columnpicker.js"></script>
+
+{% block static %}
+{% endblock %}
+<script type="text/javascript">
+{% block javascript %}
+{% endblock %}
+</script>
+</head>
+<body>
+{% include "navHeader.html" %}
+<div style="margin-left:20px; margin-top:20px; margin-bottom:5%; margin-right: 20px; height:100%;">
+{% block content %}
+{% endblock %}
+</div>
+{% include "messageBoard.html" %}
+</body>
+</html>

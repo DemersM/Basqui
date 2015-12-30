@@ -1,0 +1,337 @@
+﻿{% extends "base_extjs.html" %}
+{% block static %}
+<style>
+#container {
+    width:100%;
+    height:850px;
+}
+#tree {
+    width:16%;
+    height:100%;
+    float:left;
+}
+#pageContent {
+    width:84%;
+    height: 100%;
+    float:left;
+    padding-left: 20px;
+}
+.maskLoader {
+    left: 15px !important;
+    top: initial !important;
+    bottom: 40px !important;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div id="container">
+  <div id="tree"></div>
+  <div id="pageContent"></div>
+</div>
+{% endblock %}
+{% block javascript %}
+function toggle(source) {
+    checkboxes = document.getElementsByName('selection');
+    for(var i in checkboxes)
+        checkboxes[i].checked = source.checked;
+}
+
+Ext.onReady(function(){
+  Ext.Ajax.timeout = 3600000;
+
+  Ext.define('Folder', {
+    extend: 'Ext.data.Model',
+    fields: [
+        { name: 'id', type: 'int' },
+        { name: 'name', type: 'string' },
+        { name: 'type', type: 'string' }
+    ],
+    proxy: {
+            type: 'ajax',
+            url: '{% url 'trees:initMapsTree' %}',
+    }
+  });
+
+  function closeAllWindows(){
+    Ext.WindowManager.each(function(cmp) { if (cmp.xtype === 'window') cmp.destroy(); });
+  }
+
+  mapsTable = function(node_id){
+    Ext.Ajax.request({
+      url: "{% url 'trees:listMaps' %}",
+      method: "POST",
+      params: {'node_id' : node_id },
+      success: function(r){
+                  closeAllWindows();
+                  html = Ext.decode(r.responseText).html;
+                  Ext.get('pageContent').update(html);
+                  js = Ext.decode(r.responseText).js;
+                  eval(js);
+                  //var record = store.getNodeById(node_id);
+                  //tree.getSelectionModel().select(record);
+               }
+    });
+  }
+
+  mapViewer = function(node_id){
+    Ext.Ajax.request({
+      url: "{% url 'maps:initMapViewer' %}",
+      method: "POST",
+      params: {'node_id' : node_id },
+      form: "mapOptionsForm",
+      success: function(r){
+                  closeAllWindows()
+                  html = Ext.decode(r.responseText).html
+                  js = Ext.decode(r.responseText).js
+                  Ext.get('pageContent').update(html);
+                  eval(js);
+               }
+    });
+  }
+
+  createMap = function(node_id){
+    Ext.Ajax.request({
+      url: "{% url 'maps:createMap' %}",
+      method: "POST",
+      params: {'node_id' : node_id },
+      form: "createMapForm",
+      success: function(r){
+                  closeAllWindows()
+                  map = Ext.decode(r.responseText).map
+                  if(map){
+                    parent = store.getNodeById(node_id);
+                    parent.appendChild({
+                                   id: map.pk,
+                                   name: map.name,
+                                   leaf:  true,
+                    });
+                    store.sync();
+                    mapsTable(node_id);
+                  } else{
+                      html = Ext.decode(r.responseText).html
+                      Ext.get('pageContent').update(html);
+                  }
+               },
+    });
+  }
+
+  function renameNode(record, HTMLTarget){
+    console.log(record);
+    var editor = new Ext.Editor({
+        ignoreNoChange : true,
+        field: {
+            xtype: 'textfield'
+        }
+    });
+    editor.startEdit(Ext.get(HTMLTarget), record.get('name'));
+    editor.on('complete', function(me, value){
+      record.set('name', value);
+      Ext.Ajax.request({
+                   url: "{% url 'trees:renameNode' %}",
+                   method: 'POST',
+                   params: {'id': record.get('id'),
+                            'name': value},
+                   success: function(r){
+                               store.sync();
+                               mapsTable(record.parentNode.get('id'));
+                            }
+                });
+    });
+  }
+
+  function duplicateNode(record){
+      Ext.Ajax.request({
+                   url: "{% url 'trees:duplicateNode' %}",
+                   method: 'POST',
+                   params: {'id': record.get('id'),},
+                   success: function(r){
+                              html = Ext.decode(r.responseText).html
+                              layer = Ext.decode(r.responseText).layer
+                              if(layer){
+                                record.parentNode.appendChild({
+                                               id: layer.pk,
+                                               name: layer.name,
+                                               type: layer.geom_type,
+                                               leaf:  true,
+                                });
+                              }
+                              store.sync();
+                              mapsTable(record.parentNode.get('id'));
+                            }
+      });
+  }
+
+  var store = Ext.create('Ext.data.TreeStore', {
+    id: 'store',
+    model: 'Folder',
+    root: {'name' : 'Maps',
+           'id' : '{{ folder.pk }}',
+           'type' : '{{ folder.type }}',
+           'expanded': false,
+    }
+  });
+
+  var tree =  Ext.create('Ext.tree.Panel', {
+      id: 'tree',
+      requires: ['Ext.tree.*',
+        'Ext.data.*', 
+        'Ext.Ajax.request',],
+      renderTo: 'tree',
+      width: 300,
+      height: 850,
+      header: false,
+      useArrows: true,
+      rootVisible: true,
+      multiSelect: true,
+      store: store,
+      viewConfig: {
+        plugins: {
+            ptype: 'treeviewdragdrop',
+            appendOnly: true
+            },
+        listeners: {
+          beforedrop: function(node, data, overModel, dropPosition, dropFunction, eOpts ) {
+                var dest = overModel.getId();
+                var nodes_id = [];
+                for (var i = 0; i < data.records.length; i++) {
+                    nodes_id.push(data.records[i].get('id'));
+                }
+                Ext.Ajax.request({
+                   url: "{% url 'trees:moveNodes' %}",
+                   method: 'POST',
+                   params: {'nodes_id': nodes_id,
+                            'parent': dest},
+                   success: function(r){
+                               if(Ext.decode(r.responseText).error) {
+                                   alert('cancel')
+                                   return false;
+                               }
+                            }
+                });
+          },
+        }
+      },
+      listeners:{
+          itemclick: function(s,r) {
+                mapsTable(r.get('id'));
+          },
+          itemmouseenter: function(s,r) {
+                // Some Metadata
+          }
+      },
+      columns: [
+            { xtype: 'treecolumn', header: 'Name', dataIndex: 'name', flex:2 },
+            { text: 'Id', 'dataIndex': 'id', flex:1, sortable: true },
+            { text: 'Type', 'dataIndex': 'type', flex:1, sortable: true },
+      ],
+      tbar: [{
+        html: '<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>',
+        handler: function(){
+                  tree.expandAll();
+                }
+        }, {
+        html: '<span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>',
+        handler: function(){
+                  tree.collapseAll();
+                }
+        }],
+  });
+
+  var contextMenu = new Ext.menu.Menu({
+    items: [{
+      text: 'New Folder',
+      handler: function(thisBtn,event){
+                 var record = tree.getSelectionModel().getSelection();
+                 var id = record[0].getId();
+                 Ext.Ajax.request({
+                   url: "{% url 'trees:insertFolder' %}",
+                   method: 'POST',
+                   params: { 'id': id },
+                   success: function(r){
+                              child_id = Ext.decode(r.responseText).child_id;
+                              parent = store.getNodeById(Ext.decode(r.responseText).parent_id);
+                              parent.insertChild(0,{
+                                           id: child_id,
+                                           name: "New Folder",
+                                           leaf:  false,
+                                           children: []
+                              });
+                              parent.expand();
+                              store.sync();
+                            }
+                 });
+                }
+    },{
+      text: 'Create Map',
+      handler: function(thisBtn, event){
+                   var record = tree.getSelectionModel().getSelection();
+                   createMap(record[0].getId());
+               }
+    },{
+      text: 'Duplicate',
+      handler: function(thisBtn, event){
+                 var record = tree.getSelectionModel().getSelection();
+                 if(record[0].isRoot()) {
+                   return ;
+                 } else {
+                     duplicateNode(record[0]);
+                 }
+                }
+     },{
+      text: 'Rename',
+      handler: function(thisBtn, event){
+                 var record = tree.getSelectionModel().getSelection();
+                 if(record[0].isRoot()) {
+                   return ;
+                 } else {
+                     var HTMLTarget = tree.getView().getNode(record[0]);
+                     renameNode(record[0], HTMLTarget);
+                 }
+                }
+      },{
+      text: 'Delete',
+      handler: function(thisBtn, event){
+                 var c = confirm("Delete the selected file(s)")
+                 if(c){
+                   var records = tree.getSelectionModel().getSelection();
+                   var nodes_id = [];
+                   for (var i=0; i < records.length; i++) {
+                       nodes_id.push(records[i].getId());
+                   }
+                   Ext.Ajax.request({
+                     url: "{% url 'trees:deleteNodes' %}",
+                     method: 'POST',
+                     params: {'nodes_id': nodes_id},
+                     success: function(r){
+                                for (var i=0; i < records.length; i++) {
+                                  records[i].remove();
+                                }
+                                store.sync();
+                                mapsTable(Ext.decode(r.responseText).ancestor_id);
+                              }
+                   });
+                 }
+               }
+      },]
+  });
+
+  tree.on('itemcontextmenu', function(view, record, item, index, event) {
+       event.preventDefault();
+       contextMenu.showAt(event.getXY());
+  });
+
+  Ext.Ajax.on("beforerequest", function(){
+        Ext.getBody().mask('Please wait...', 'maskLoader');
+  });
+
+  Ext.Ajax.on("requestcomplete", function(){
+        Ext.getBody().unmask();
+  });
+  
+  Ext.Ajax.on("requestexception", function(){
+        Ext.getBody().unmask();
+        alert("server error")
+  });
+
+});
+{% endblock %}

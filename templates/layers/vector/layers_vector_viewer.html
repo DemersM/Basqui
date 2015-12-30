@@ -1,0 +1,27 @@
+{% load tags %}
+<h4>Vector Layer Viewer</h4>
+<p>
+  <div class="btn-group btn-breadcrumb">
+    <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+  {% for node in nodes %}
+    <a href="#" class="btn btn-default" onclick="layersTable({{ node.pk }})">{% if node|field_type:'Folder' %}<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;{{ node }}{% else %}<span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;{{ node }}{% endif %}</a></li>
+  {% endfor %}
+  </div>
+</p>
+<p style='font-family: "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;'>
+| <a href="#" onclick="attributesTable({{ shapefile.pk }})">Attributes Table</a>
+|<a href="/basqui/layer/shapefile/edit/{{ shapefile.pk }}/new/">Add Feature</a> |
+</p>
+<style type="text/css">
+#mapContainer {
+    width:75%;
+    float:left;
+}
+
+#attrTableContainer {
+   width:25%;
+   float:right;
+}
+</style>
+<div id="mapContainer"></div>
+<div id="attrTableContainer"></div>

@@ -1,0 +1,144 @@
+﻿----------------------------------------
+Basqui-POST 1.2.4
+----------------------------------------
+Date:2014-10-23
+----------------------------------------
+
+----------------------------------------
+SERVEUR DE CARTES ET DE COUCHES
+----------------------------------------
+Ajouts:
+- ajouter dossier pour le user car mapnik xml ne peut être écrit à la création d'un user
+
+Todo:
+- TileStache MetaTile
+- utiliser VecTiles avec Mapnik possible utilise avec donnees externes
+- inclure OSM data from http://open.mapquestapi.com/xapi/ avec Mapnik ou TileStache bbox
+- Compiler mapnik avec le plugin Rasterlite ou Python
+- Cartes ToPoJSON
+- Cartes Vectorielles
+
+En dev:
+- lancement de tilestache-seed.py … la sauvegarde des features ( views.py / editFeature) (utils.py / updateTiles)
+- ajouts de tests plugins mapnik (TMS)
+
+----------------------------------------
+IMPORT/EXPORT DE COUCHES
+----------------------------------------
+Ajouts:
+
+Todo:
+- formater correctement les date field a l'import
+- Optimiser exportation
+- Support pour 3D geometry
+- Metadata (importation - création - édition )
+- importer avec le style du vector
+- importer format CSV et Excel
+- ShapefileIO pour formats non support‚s (time, datetime,lists) mettre en string
+
+----------------------------------------
+GESTION DES CARTES
+----------------------------------------
+Ajouts:
+- layout pour maps similaire à celui de layers (en dev)
+
+Todo:
+- layers list drop-down dans django-tables2 (voir: http://stackoverflow.com/questions/11326234/customize-column-for-django-tables-as-drop-down-list)
+- refresh de la Map dans GeoExt et non de la page lors d'une sauvegarde
+- seuil de visibilite‚ (MinScaleDenominator)
+- iconStyle.css (background-opacity au lieu de opacity)
+- liens dans table attribut vers la carte (zoomlevel, centerlat, centerlon non d‚finis pour conserver zoomer)
+- Conditions Style (https://github.com/mapnik/mapnik/wiki/World-population-tutorial)
+- Module permettant d'ajouter des info-bulles, video, image sur des points d'intérêts
+- Clusteriser les points d'intérêts
+- Bouton Export to PDF/PNG pour les cartes (Cairo)
+
+
+En dev:
+- Style Point
+
+----------------------------------------
+GESTION DES COUCHES
+----------------------------------------
+Ajouts:
+
+Todo:
+- find feature by attribute
+- union all table's features
+- input en fonction du field type dans l'attribute table du viewer
+- delete layer en lien avec le delete du tree et non refresh
+- signet position de la couche
+- creation de buffer ?
+- Utilisation tilestache geojson pour edit de feature
+- Export 1 layer a partir du tree
+- Delete un feature dans une couche (a partir de la carte)
+- hoverFeature buffer en fonction du zoom
+- Faire des groupes de layers permettant différentes couches tuilées dans OpenLayers
+- label pour layer également
+
+----------------------------------------
+GESTION DES ATTRIBUTS D'UNE COUCHE
+----------------------------------------
+Ajouts:
+- Afficher field Type dans le slickGrid
+
+Todo:
+- SlickGrid Time Input
+- Merge attribute based on key
+- colonne geometry true/false
+- Déveloper un field calculator
+- Champs adresse lié avec un service d'auto-complete (dropdown) genre Nominatim lors de l'édition de la cellule
+- Création de la key dans hstore lors de l'ajout d'un champs
+- Validation/Suppression lorsque qu'une column s'appelle id dans le ShapefileIO.py
+- frozen column
+- message et warning lors de save/error/tronquage
+
+----------------------------------------
+MODULE RASTER
+----------------------------------------
+ajout:
+
+Todo:
+-importation dans postgis avec foreign key sur User
+- Raster et DEM
+- 3D avec tree.js (http://blog.thematicmapping.org/2014/03/using-web-map-services-with-threejs.html)
+
+En dev:
+-table basqui_raster et import avec commande: C:\Program Files\PostgreSQL\9.3\bin>raster2pgsql -s 4326 -M -F -t 100x100 -a c:\temp\mun.tif public.basqui_raster | psql -U postgres -d basqui -h localhost -p 5433
+
+----------------------------------------
+MESSAGE BOARD
+----------------------------------------
+Ajout:
+
+Todo:
+- Mise-à-jour dynamique
+- Compléter les messages + page sommaire des messages
+- lié les messages avec l'entités (pk)
+
+----------------------------------------
+GESTION DES UTILISATEURS
+----------------------------------------
+Ajout:
+
+Todo:
+- Gestion d'utilisateurs/mot de passe avec accès à des requetes sur les cartes seulement
+- Serveur SMTP pour enregistrement
+- Pages de profil / options / account
+
+----------------------------------------
+GENERAL
+----------------------------------------
+Ajout:
+-Renommé module maps et layers
+
+Todo:
+- Limiter l'expension des fenêtres ExtJs sous le header et au-dessus du messageBoard
+- purer les boutons Scale et layerswitcher d'OpenLayers
+- Faire un build de GDAL avec une plus petite pr‚cision dans la fonction .ExportToWkt()
+- Inclure un title dans le head
+- Messages d'erreurs des unique_together dans fonction de Validation au lieu de la view
+- Plot des données (Shapely ou vincent ou D3 (https://github.com/wrobstory/vincent))
+- Inclure librairies (OpenLayers, jQuery et jQuery UI, ExtJs, ect) en interne avec css
+- Séparer forms selon les modules
+- Utilise Django-Celery pour les actions en décalé

@@ -1,0 +1,52 @@
+﻿{% extends "base_no_extjs.html" %}
+{% block static %}
+<script type="text/javascript" src="/static/main/js/collapse.js"></script>
+{% endblock %}
+{% block content %}
+<h1>Define WMS options</h1><br>
+  {% if formset.errors %}
+      <p style="color: red;">
+          Please correct the error{{ formset.errors|pluralize }} below.
+      </p>
+  {% endif %}
+<p>| <a href="/basqui/layer/wms/">Back to WMS list</a> |
+<table>
+  <tr>
+  <td>
+    <form method="post" action="" encrypt="multipart/form-data">{% csrf_token %}
+        <fieldset class="module">
+          <h2>WMS Layer Options</h2>
+          {{ form.as_p }}
+          <input type="submit" style="display:none;" name="find" value="Check layers">
+          <a href="javascript:void(0);" onclick="$('input:submit').click();">Check Layer(s)</a>
+        </fieldset>
+        {% if srs %}
+        <fieldset class="module">
+          <h2>Layers</h2>
+          <div style="max-height:400px; overflow:auto;">
+            <table>
+            	{% if wmsLayers %}
+              {% for wmsLayer in wmsLayers %}
+              <tr>
+                 <td>{{ wmsLayer }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+          <hr>
+          <p>** Only layers with {{ srs }} are listed **
+              {% else %}
+              <tr>
+                 <td>** No layer found with {{ srs }} **</td>
+              </tr>
+            </table>
+          </div>
+              {% endif %}
+        </fieldset>
+        {% endif %}
+        <input type="submit" value="Save">
+    </form>
+  </td>
+  </tr>
+</table>
+{% endblock %}

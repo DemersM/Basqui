@@ -1,0 +1,12 @@
+<div>
+  <a href="#" id="showMessageBoard">SHOW MESSAGE BOARD</a>
+  <div id="messageBoard">
+      <a href="#" id="hideMessageBoard">HIDE MESSAGE BOARD</a>
+      <table frame=box border=1>
+          {% for message in messagesLog %}
+          <tr>
+            <td>>>><b>{{ message.date_created }}</b> {{ message.message }} by <b>{{ message.created_by }}</b> </td>
+          </tr>{% endfor %}
+      </table>
+  </div>
+</div>

@@ -1,0 +1,173 @@
+﻿----------------------------------------
+Basqui-POST 1.2.6
+----------------------------------------
+Date:17 mars 2015
+----------------------------------------
+
+----------------------------------------
+MODULE TREE
+----------------------------------------
+Ajouts:
+
+Todo:
+- Permettre de trier les trees
+- Utiliser le tree de GeoExt pour légende?
+
+----------------------------------------
+SERVEUR DE CARTES ET DE COUCHES
+----------------------------------------
+Ajouts:
+- TransitionEffect de la tiledLayer défini à 'map-resize' au lieu de 'resize'
+
+Todo:
+- definir un extent dans le datasource
+- refaire le config de chaque carte quand une de ses layer est supprimée ou a chaque ouverture de carte
+
+- Investiguer si le blocking time peut être la cause de lenteur
+- TileStache MetaTile
+- utiliser VecTiles avec Mapnik possible utilise avec donnees externes
+- inclure OSM data from http://open.mapquestapi.com/xapi/ avec Mapnik ou TileStache bbox
+- Compiler mapnik avec le plugin Rasterlite ou Python
+- Cartes ToPoJSON
+- Cartes Vectorielles
+
+En dev:
+- lancement de tilestache-seed.py … la sauvegarde des features ( views.py / editFeature) (utils.py / updateTiles)
+- ajouts de tests plugins mapnik (TMS)
+
+----------------------------------------
+IMPORT/EXPORT DE COUCHES
+----------------------------------------
+Ajouts:
+- migration vers django.contrib.gis.gdal au lieu d'osgeo pour l'import
+
+Todo:
+- utiliser geom_type de type integer au lieu de string
+- Export de couches avec AJAX
+- Export erreur handling pour mauvais EPSG (et autres?)
+- formater correctement les date field a l'import
+- Support pour 3D geometry
+- Metadata (importation - création - édition )
+- importer avec le style du vector
+- importer format CSV et Excel
+
+----------------------------------------
+GESTION DES CARTES
+----------------------------------------
+Ajouts:
+- MapOptions en banner avec modal window
+- layerMapOptions table auto-save on change
+- layerStyle et layerLabel interface (closable/orderable tabs)
+
+Todo:
+- permettre l'upload de svg mais utiliser un sanitizer (html5lib-python: https://github.com/clones/html5lib/blob/master/python/src/html5lib/sanitizer.py)
+- permettre l'upload de font
+- interface pour le FILTER des styles et labels
+- fenêtre avec info sur la carte, x/y curso, zoom level, scale level, etc...
+- permettre les PatternSymbolizer, BuildingSymbolizer ShieldsSymbolizer et MarkerSymbolizer (polygon et linestring: https://github.com/mapnik/mapnik/wiki/XMLConfigReference)
+- permettre de modifier la projection
+- permettre de copier le style utilisé pour la même couche dans une autre carte
+- classification: https://github.com/simogeo/geostats
+- intégration de tilemill remote pour configurer les styles (https://www.mapbox.com/tilemill/docs/guides/ubuntu-service/)
+- iconStyle.css (background-opacity au lieu de opacity)
+- Conditions Style (https://github.com/mapnik/mapnik/wiki/World-population-tutorial)
+- Module permettant d'ajouter des info-bulles, video, image sur des points d'intérêts
+- Clusteriser les points d'intérêts
+- Bouton Export to PDF/PNG pour les cartes (Cairo) ou (GeoExt https://github.com/geoext/geoext2/tree/master/examples/printpage)
+
+En dev:
+- nouveau model LabelFont + initialise dans user.py (iniApp.py)
+- Style Point (https://github.com/micc83/fontIconPicker)
+
+----------------------------------------
+GESTION DES COUCHES
+----------------------------------------
+Ajouts:
+
+Todo:
+- delete layer(s) à partir de la layers table 
+- edition de la geometry pour feature ajouté à partir de l'attribute table
+- find feature by attribute
+- union all table's features
+- input en fonction du field type dans l'attribute table du viewer
+- signet position de la couche
+- creation de buffer ?
+- Utilisation tilestache geojson pour edit de feature
+- Export 1 layer a partir du tree
+- Delete un feature dans une couche (a partir de la carte)
+- hoverFeature buffer en fonction du zoom
+- Faire des groupes de layers permettant différentes couches tuilées dans OpenLayers
+- label pour layer également
+
+----------------------------------------
+GESTION DES ATTRIBUTS D'UNE COUCHE
+----------------------------------------
+Ajouts:
+
+Todo:
+- SlickGrid composite editor (http://mleibman.github.io/SlickGrid/examples/example-composite-editor-item-details.html)
+- SlickGrid Time Input
+- Merge attribute based on key
+- colonne geometry true/false
+- Déveloper un field calculator
+- Champs adresse lié avec un service d'auto-complete (dropdown) genre Nominatim lors de l'édition de la cellule
+- Création de la key dans hstore lors de l'ajout d'un champs (nécessaire ?)
+- Validation/Suppression lorsque qu'une column s'appelle id dans le ShapefileIO.py
+- frozen column
+- message et warning lors de save/error/tronquage
+
+----------------------------------------
+MODULE RASTER
+----------------------------------------
+ajout:
+
+Todo:
+-importation dans postgis avec foreign key sur User
+- Raster et DEM
+- 3D avec tree.js (http://blog.thematicmapping.org/2014/03/using-web-map-services-with-threejs.html)
+- 3D avec Cesium.js (http://blog.thematicmapping.org/2014_10_01_archive.html) et le wrapper WebGL (http://www.webglearth.org/)
+
+En dev:
+-table basqui_raster et import avec commande: C:\Program Files\PostgreSQL\9.3\bin>raster2pgsql -s 4326 -M -F -t 100x100 -a c:\temp\mun.tif public.basqui_raster | psql -U postgres -d basqui -h localhost -p 5433
+
+----------------------------------------
+MESSAGE BOARD
+----------------------------------------
+Ajout:
+
+Todo:
+- Mise-à-jour dynamique
+- Compléter les messages + page sommaire des messages
+- lié les messages avec l'entités (pk)
+
+----------------------------------------
+GESTION DES UTILISATEURS
+----------------------------------------
+Ajout:
+
+Todo:
+- Gestion d'utilisateurs/mot de passe avec accès à des requetes sur les cartes seulement
+- Serveur SMTP pour enregistrement
+- Pages de profil / options / account
+
+----------------------------------------
+GENERAL
+----------------------------------------
+Ajout:
+
+Todo:
+- Utiliser bootstrap-slickgrid.js (ne pas utiliser slickgrid pour list (utiliser bootstrap table + paging)
+- Ne plus utiliser base.css, table.css, forms.css
+- Incorporer des données OSM avec Overpass_API (http://www.overpass-api.de/index.html) et https://github.com/DinoTools/python-overpy
+- Utiliser Ext.container.Viewport avec layout: 'border'
+- Limiter l'expension des fenêtres ExtJs sous le header et au-dessus du messageBoard
+- purer les boutons Scale et layerswitcher d'OpenLayers
+- Faire un build de GDAL avec une plus petite pr‚cision dans la fonction .ExportToWkt()
+- Inclure un title dans le head
+- Messages d'erreurs des unique_together dans fonction de Validation au lieu de la view
+- Plot des données (Shapely ou vincent ou D3 (https://github.com/wrobstory/vincent))
+- Inclure librairies (OpenLayers, jQuery et jQuery UI, ExtJs, ect) en interne avec css
+- Séparer forms selon les modules
+- Utilise Django-Celery pour les actions en décalé et multithread (ou module multiprocessing) 
+
+En Dev:

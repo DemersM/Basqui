@@ -1,0 +1,15 @@
+﻿{% extends "basemap.html" %}
+{% block content %}
+    <h1>Vector Layer Viewer</h1>
+    <p style='font-family: "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;'>
+    | <a href="/basqui/layer/shapefile/">Back to Vectors List</a>
+    | <a href="/basqui/layer/shapefile/attributesTable/{{ shapefile.pk }}/">Attributes Table</a>
+    |<a href="/basqui/layer/shapefile/edit/{{ shapefile.pk }}/new/">Add a New Feature</a> |
+    </p>
+{% endblock %}
+{% block javascript %}
+var map;
+function initialize(){
+{% include "basqui/js/manage_layer_raster_viewer.js" %}
+}
+{% endblock %}

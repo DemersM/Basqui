@@ -1,0 +1,8 @@
+{% for layer in layersOrder %}
+ .styleIcon_{{ layer.pk }} { {% if layer.layer.geom_type == "Point" %}
+     background-image:url('{{ layer.styles.all.0.icon.url }}'); {% elif layer.layer.geom_type == "LineString" %}
+     border: {{ layer.styles.all.0.strokeWeight }}px solid {{ layer.styles.all.0.strokeColor }}; {% else %}
+     background-color: {{ layer.styles.all.0.fillColor }};
+     opacity: {{ layer.styles.all.0.fillOpacity }};
+     border: {{ layer.styles.all.0.strokeWeight }}px solid {{ layer.styles.all.0.strokeColor }};{% endif %}
+  }{% endfor %}

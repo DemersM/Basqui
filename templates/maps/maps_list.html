@@ -1,0 +1,49 @@
+<style type="text/css">
+{% load mathfilters %}
+.slick-viewport {
+  max-height: 718px;
+}
+.dataGrid {
+  height: {{ maps_count|mul:25|add:74 }}px;
+  min-height: 74px;
+  max-height: 718px;
+  overflow:auto;
+}
+.dataGrid a{
+  color: #5b80b2;
+  font-weight: bold;
+  text-decoration: none;
+}
+.dataGrid a:hover {
+  color: #036;
+}
+.grid-footer {
+  background: white url(/static/main/img/pagination-bg.gif) left 180% repeat-x;
+  border: 1px solid #DDD;
+  overflow: auto;
+  list-style: none;
+}
+</style>
+{% load tags %}
+<h4>Maps list</h4
+<p>
+  <div class="btn-group btn-breadcrumb">
+    <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+  {% for node in nodes %}
+    <a href="#" class="btn btn-default" onclick="mapsTable({{ node.pk }})">{% if node|field_type:'Folder' %}<i class="glyphicon glyphicon-folder-open" aria-hidden="true"></i>&nbsp;&nbsp;{{ node }}{% else %}<i class="glyphicon glyphicon-file" aria-hidden="true"></i>&nbsp;{{ node }}{% endif %}</a>
+  {% endfor %}
+  </div>
+</p>
+<form method="post" action="" encrypt="multipart/form-data">{% csrf_token %}
+  <p>
+    | <a href="#" onclick="publishMap({{ folder.pk }})">Publish Map</a> |
+    <a href="#" onclick="createMap({{ folder.pk }})">Create Map</a> |
+    <input type="submit" style="display:none;" name="delete" value="Delete">
+    <a href="#" onclick="$('input:submit').click();">Delete Map(s)</a> |
+    <p>
+<div style="border: 1px solid #DDD;">
+  <div class="dataGrid"></div>
+  <div class="grid-footer">
+    <ul style="float: right; padding: 10px;"><li>{{ maps_count }} Maps</li></ul>
+  </div>
+</div>

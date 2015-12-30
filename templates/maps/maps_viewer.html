@@ -1,0 +1,36 @@
+<style type="text/css">
+{% include "maps/css/iconStyle.css" %}
+#mapContainer {
+    width:73%;
+    float:left;
+}
+#forms {
+    width:27%;
+    float:right;
+    //height: 100%;
+}
+#mapOptions {
+    height: 10%;
+}
+#layerMapOptions {
+    height: 90%;
+}
+.ui-sortable-helper {
+    display: table;
+}
+</style>
+{% load tags %}
+<h4>Map Viewer</h4>
+<p>
+  <div class="btn-group btn-breadcrumb">
+    <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+  {% for node in nodes %}
+    <a href="#" class="btn btn-default" onclick="mapsTable({{ node.pk }})">{% if node|field_type:'Folder' %}<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;{{ node }}{% else %}<span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;{{ node }}{% endif %}</a></li>
+  {% endfor %}
+  </div>
+</p>
+<div id="mapContainer"></div>
+<div id="forms">
+  <div id="mapOptions">{% include "maps/maps_optionsForms.html" %}</div>
+  <div id="layerMapOptions">{% include "maps/maps_layerMapOptionsFormset.html" %}</div>
+</div>

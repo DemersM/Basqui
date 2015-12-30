@@ -1,0 +1,19 @@
+﻿{% extends "base_no_extjs.html" %}
+{% block content %}
+<h1> WMS Layers list </h1><br>
+<form method="post" action="" encrypt="multipart/form-data">{% csrf_token %}
+  <p>
+    | <a href="/basqui/layer/wms/new/">Add WMS Layer</a> |
+    <input type="submit" style="display:none;" name="delete" value="Delete">
+    <a href="javascript:void(0);" onclick="$('input:submit').click();">Delete WMS Layer(s)</a> |
+  {% load django_tables2 %}
+  {% render_table wms_table %}
+  </form>
+{% endblock %}
+{% block javascript %}
+function toggle(source) {
+    checkboxes = document.getElementsByName('selection');
+    for(var i in checkboxes)
+        checkboxes[i].checked = source.checked;
+}
+{% endblock %}

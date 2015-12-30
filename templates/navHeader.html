@@ -1,0 +1,31 @@
+{% load tags %}
+<div id='cssmenu'>
+  <ul>
+      <li><a class="{% active request "^/basqui/$" %}" href="/basqui/"><span>Home</span></a></li>
+      <li><a class="has-sub {% active request "^/basqui/manage/" %}" href="/basqui/manage/"><span>Manage</span></a>
+          <ul>
+            <li><a class="{% active request "^/basqui/manage/profile/" %}" href="/basqui/manage/profile/"><span>Profile</span></a></li>
+            <li><a class="{% active request "^/basqui/manage/options/" %}" href="/basqui/manage/options/"><span>Options</span></a></li>
+            <li><a class="{% active request "^/basqui/manage/account/" %}" href="/basqui/manage/account/"><span>Account</span></a></li>
+          </ul>
+      </li>
+      <li><a class="{% active request "^/basqui/map/" %}" href="/basqui/map/"><span>Maps</span></a></li>
+      <li><a class="has-sub {% active request "^/basqui/layer/" %}" href="/basqui/layer/"><span>Layers</span></a>
+          <ul>
+            <li><a class="{% active request "^/basqui/layer/shapefile/" %}" href="/basqui/layer/shapefile/"><span>Vector</span></a></li>
+            <li><a class="{% active request "^/basqui/layer/raster/" %}" href="/basqui/layer/raster/view/"><span>Raster</span></a></li>
+            <li><a class="{% active request "^/basqui/layer/wms/" %}" href="/basqui/layer/wms/"><span>WMS</span></a></li>
+          </ul>
+      </li>
+      <li><a class="{% active request "^/basqui/support/" %}" href="/basqui/support/"><span>Support</span></a>
+        <ul>
+            <li><a class="{% active request "^/basqui/contact/" %}" href="/basqui/contact/"><span>Contact</span></a></li>
+            <li><a class="{% active request "^/basqui/doc/" %}" href="/basqui/doc/"><span>Doc</span></a></li>
+            <li><a class="{% active request "^/basqui/about/" %}" href="/basqui/about/"><span>About</span></a></li>
+        </ul>
+      </li>
+      {% if user.is_authenticated %}<a class="logging" href="/accounts/logout/"><span>Sign-Out</span></a>{% else %}
+      <a class="logging" href="/accounts/login/"><span>Sign-In</span></a>
+      <a class="logging" href="/accounts/register/"><span>Sign-Up</span></a>{% endif %}
+  </ul>
+</div>

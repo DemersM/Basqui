@@ -1,0 +1,68 @@
+<style type="text/css">
+{% load mathfilters %}
+.slick-viewport {
+  max-height: 640px;
+}
+.dataGrid {
+  max-width: 100%;
+  height: {{ features_count|mul:25|add:74 }}px;
+  min-height: 74px;
+  max-height: 650px;
+  overflow:auto;
+}
+.dataGrid a{
+  color: #5b80b2;
+  font-weight: bold;
+  text-decoration: none;
+}
+.dataGrid a:hover {
+  color: #036;
+}
+.grid-footer {
+  width: {{ columns|length|mul:120|add:80 }}px;
+  max-width: 100%;
+  //background: white url(/static/main/img/pagination-bg.gif) left 180% repeat-x;
+  border: 1px solid #DDD;
+}
+.column-type {
+  display: block;
+  border-top: 1px dotted #666666;
+  font-style: italic;
+  font-size: 10px;
+}
+</style>
+{% load tags %}
+<h4>Attributes Table</h4>
+<p>
+  <div class="btn-group btn-breadcrumb">
+    <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+  {% for node in nodes %}
+    <a href="#" class="btn btn-default" onclick="layersTable({{ node.pk }})">{% if node|field_type:'Folder' %}<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;{{ node }}{% else %}<span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;{{ node }}{% endif %}</a></li>
+  {% endfor %}
+  </div>
+</p>
+<p>
+  | <a href="#" onclick="layerViewer({{ layer.pk }});">Layer Viewer</a> |
+  <a href="#" onclick="editField({{ layer.pk }});">Edit Table Structure</a> |
+  <a href="#" onclick="addFeatureToTable();">Add Feature</a> |
+  <a href="#" onclick="deleteRow();">Delete Feature(s)</a> |
+</p>
+<div class="dataGrid"></div>
+<div class="grid-footer">
+	<div class="container-fluid bg-info">
+	  <div class="row">
+	    <div class="col-md-2 text-left">
+		    <div class="btn-group">
+		      <button class="btn btn-default btn-sm" onclick="undo()">Undo</button>
+		      <button class="btn btn-default btn-sm" onclick="redo()">Redo</button>
+		    </div>
+		  </div>
+		  <div class="col-md-2 col-md-offset-8 text-right">
+	      <h6 id="FeatCount">{{ features_count }} features</h6>
+		  </div>
+		  <div id="error" style="color: red;"></div>
+		  <div id="saved" style="color: green;"></div>
+	  </div>
+	</div>
+</div>
+

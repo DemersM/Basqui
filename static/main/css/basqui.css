@@ -1,0 +1,321 @@
+.asteriskField {
+    display: none;
+}
+#cssmenu {
+  position: relative;
+  height: 44px;
+  background: #333;
+  width: auto;
+}
+
+#cssmenu li {
+  list-style-type: none;
+  padding: 0;
+}
+
+#cssmenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+#cssmenu > ul {
+  position: relative;
+  display: block;
+  background: #333;
+  height: 32px;
+  width: 100%;
+  z-index: 20000;
+}
+#cssmenu > ul > li {
+  display: block;
+  position: relative;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+#cssmenu > ul > {
+  display: none;
+}
+#cssmenu ul li a {
+  display: block;
+  font-family: "Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+  text-decoration: none;
+}
+#cssmenu > ul > li > a {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 15px 20px;
+  color: #fff;
+  text-transform: uppercase;
+  -webkit-transition: color 0.25s ease-out;
+  -moz-transition: color 0.25s ease-out;
+  -ms-transition: color 0.25s ease-out;
+  -o-transition: color 0.25s ease-out;
+  transition: color 0.25s ease-out;
+}
+#cssmenu > ul > li.has-sub > a {
+  padding-right: 32px;
+}
+#cssmenu > ul > li:hover > a {
+  background: #444;
+}
+#cssmenu li.has-sub::after {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+#cssmenu > ul > li.has-sub::after {
+  right: 10px;
+  top: 20px;
+}
+
+#cssmenu a.active {
+  color: #ffff99;
+  font-weight: bold;
+}
+#cssmenu a.logging {
+  float: right;
+  margin-right: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 15px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+#cssmenu a.logged-out {
+  float: right;
+  margin-right: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 15px;
+  color: #fff;
+  text-transform: uppercase;
+}
+#cssmenu a.logged-out:hover {
+  background: #444;
+}
+#cssmenu a.logging:hover {
+  background: #444;
+}
+#cssmenu ul ul {
+  position: absolute;
+  left: -9999px;
+  top: 70px;
+  opacity: 0;
+  -webkit-transition: opacity .3s ease, top .25s ease;
+  -moz-transition: opacity .3s ease, top .25s ease;
+  -ms-transition: opacity .3s ease, top .25s ease;
+  -o-transition: opacity .3s ease, top .25s ease;
+  transition: opacity .3s ease, top .25s ease;
+  z-index: 20000;
+}
+#cssmenu ul ul ul {
+  top: 37px;
+}
+#cssmenu ul ul li {
+  position: relative;
+}
+#cssmenu > ul > li:hover > ul {
+  left: auto;
+  top: 44px;
+  opacity: 1;
+}
+#cssmenu ul ul li:hover > ul {
+  left: 140px;
+  top: 0;
+  opacity: 1;
+}
+#cssmenu ul ul li a {
+  width: 100px;
+  padding: 10px 20px;
+  font-size: 12px;
+  color: #fff;
+  background: #333;
+  -moz-box-sizing: initial;
+  -webkit-transition: all .35s ease;
+  -moz-transition: all .35s ease;
+  -ms-transition: all .35s ease;
+  -o-transition: all .35s ease;
+  transition: all .35s ease;
+}
+#cssmenu ul ul li:hover > a {
+  background: #444;
+}
+#cssmenu ul ul li:last-child > a,
+#cssmenu ul ul li.last > a {
+  border-bottom: 0;
+}
+
+#cssmenu ul ul li.has-sub::after {
+  right: 10px;
+  top: 12px;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
+  -webkit-transition: -webkit-transform 0.2s ease, right 0.2s ease;
+}
+#cssmenu ul ul li.has-sub:hover::after {
+  right: -5px;
+  -webkit-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+@media all and (max-width: 800px), only screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 1024px), only screen and (min--moz-device-pixel-ratio: 2) and (max-width: 1024px), only screen and (-o-min-device-pixel-ratio: 2/1) and (max-width: 1024px), only screen and (min-device-pixel-ratio: 2) and (max-width: 1024px), only screen and (min-resolution: 192dpi) and (max-width: 1024px), only screen and (min-resolution: 2dppx) and (max-width: 1024px) {
+  #cssmenu {
+    width: 200px;
+  }
+  #cssmenu ul {
+    width: 200px;
+  }
+
+  #cssmenu > ul {
+    height: auto;
+    display: block;
+  }
+  #cssmenu > ul > li {
+    float: none;
+  }
+  #cssmenu li,
+  #cssmenu > ul > li {
+    display: none;
+  }
+  #cssmenu ul ul,
+  #cssmenu ul ul ul,
+  #cssmenu ul > li:hover > ul,
+  #cssmenu ul ul > li:hover > ul {
+    position: relative;
+    left: auto;
+    top: auto;
+    opacity: 1;
+    padding-left: 0;
+  }
+  #cssmenu ul .has-sub::after {
+    display: none;
+  }
+  #cssmenu ul li a {
+    padding: 12px 20px;
+  }
+  #cssmenu ul ul li a {
+    border: 0;
+    background: none;
+    width: 200px;
+    padding: 8px 35px;
+  }
+  #cssmenu ul ul li:hover > a {
+    background: none;
+    color: #8c9195;
+  }
+  #cssmenu ul ul ul a {
+    padding: 8px 50px;
+  }
+  #cssmenu ul ul ul ul a {
+    padding: 8px 65px;
+  }
+  #cssmenu ul ul ul ul ul a {
+    padding: 8px 80px;
+  }
+  #cssmenu ul ul ul ul ul ul a {
+    padding: 8px 95px;
+  }
+  #cssmenu > ul > #menu-button {
+    display: block;
+    cursor: pointer;
+  }
+  #cssmenu #menu-button > a {
+    padding: 14px 20px;
+  }
+  #cssmenu ul.open li,
+  #cssmenu > ul.open > li {
+    display: block;
+  }
+  #cssmenu > ul.open > li#menu-button > a {
+    color: #fff;
+  }
+  #cssmenu #menu-button::after {
+    display: block;
+    content: '';
+    position: absolute;
+    height: 3px;
+    width: 22px;
+    right: 20px;
+    top: 15px;
+  }
+  #cssmenu #menu-button::before {
+    display: block;
+    content: '';
+    position: absolute;
+    height: 3px;
+    width: 22px;
+    right: 20px;
+    top: 25px;
+  }
+  #cssmenu ul.open #menu-button::after,
+  #cssmenu ul.open #menu-button::before {
+    //border-color: #fff;
+  }
+}
+
+/* Layers list in Map Styles */
+#layersList:hover {
+    border: 1px solid #787878;
+}
+
+/* Div Map Box styles */
+td.shadow {
+    padding: 5px;
+    position: relative;
+    border: 0;
+    z-index: 1;
+    background: #ffffff;
+    box-shadow: 5px 5px 5px #999999;
+}
+
+table.shadow {
+    padding: 5px;
+    position: relative;
+    border: 0;
+    z-index: 2;
+    background: #ffffff;
+    box-shadow: 5px 5px 5px #999999;
+}
+
+/* Message Board style */
+#messageBoard {
+    border-top: 5px double;
+    border-bottom: 1px solid;
+    overflow: auto;
+    position: fixed;
+    height: 120px;
+    width: 100%;
+    bottom: 0;
+    background: #F5F8FA;
+    z-index: 2;
+}
+
+#messageBoard table {
+    width: 100%;
+    position: relative;
+    top: 35px;
+}
+
+#hideMessageBoard {
+    padding: 5px;
+    position: absolute;
+    font-weight: bold;
+}
+
+#showMessageBoard {
+    padding: 5px;
+    position: fixed;
+    font-weight: bold;
+    bottom: 0;
+    width: 100%;
+    background: #fff;
+}

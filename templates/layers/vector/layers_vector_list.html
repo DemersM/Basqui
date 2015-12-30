@@ -1,0 +1,49 @@
+<style type="text/css">
+{% load mathfilters %}
+.slick-viewport {
+  max-height: 718px;
+}
+.dataGrid {
+  height: {{ layers_count|mul:25|add:74 }}px;
+  min-height: 74px;
+  max-height: 718px;
+  overflow:auto;
+}
+.dataGrid a{
+  color: #5b80b2;
+  font-weight: bold;
+  text-decoration: none;
+}
+.dataGrid a:hover {
+  color: #036;
+}
+.grid-footer {
+  background: white url(/static/main/img/pagination-bg.gif) left 180% repeat-x;
+  border: 1px solid #DDD;
+  overflow: auto;
+  list-style: none;
+}
+</style>
+{% load tags %}
+<h4>Layers list</h4>
+<p>
+  <div class="btn-group btn-breadcrumb">
+    <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+  {% for node in nodes %}
+    <a href="#" class="btn btn-default" onclick="layersTable({{ node.pk }})">{% if node|field_type:'Folder' %}<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;{{ node }}{% else %}<span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;{{ node }}{% endif %}</a></li>
+  {% endfor %}
+  </div>
+</p>
+<p>
+    | <a href="#" onclick="importLayer({{ folder.pk }})">Import File</a> |
+    <a href="#" onclick="importOSM({{ folder.pk }})">Import OSM data</a> |
+    <a href="#" onclick="exportLayer({{ folder.pk }})">Export File(s)</a> |
+    <a href="#" onclick="createLayer({{ folder.pk }})">Create Layer</a> |
+    <a href="#" onclick="deleteLayers();">Delete Layer(s)</a> |
+</p>
+<div style="border: 1px solid #DDD;">
+  <div class="dataGrid"></div>
+  <div class="grid-footer">
+    <ul style="float: right; padding: 10px;"><li>{{ layers_count }} Layers</li></ul>
+  </div>
+</div>

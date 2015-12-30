@@ -1,0 +1,26 @@
+<style type="text/css">
+#mapContainer {
+    width:65%;
+    height: 100%;
+    float:left;
+}
+
+#formContainer {
+   width:35%;
+   height: 100%;
+   float:right;
+}
+</style>
+{% load tags %}
+{% load crispy_forms_tags %}
+<h4>Import OSM data</h4>
+<p>
+    <div class="btn-group btn-breadcrumb">
+      <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+    {% for node in nodes %}
+      <a href="#" class="btn btn-default" onclick="layersTable({{ node.pk }})">{% if node|field_type:'Folder' %}<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;{{ node }}{% else %}<span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;{{ node }}{% endif %}</a></li>
+    {% endfor %}
+    </div>
+</p>
+<div id="mapContainer"></div>
+<div id="formContainer">{% crispy form %}</div>
